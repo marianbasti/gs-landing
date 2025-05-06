@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(23, 30, 31);
+    overflow: hidden; /* Prevent scrollbars */
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px; /* Add perspective for 3D effect */
+}
+
+.logo-container {
+    position: relative;
+    width: 150px; /* Reduced from 200px */
+    height: 75px; /* Reduced from 100px */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo,
+.logo-shadow {
+    position: absolute;
+    user-select: none; /* Prevent text selection */
+    transition: transform 0.6s ease-out; /* Smooth transition for movement */
+    /* Ensure the container itself doesn't add extra space */
+    line-height: 0;
+}
+
+.logo img,
+.logo-shadow img {
+    width: 100%; /* Make image fill the container width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space below image */
+}
+
+
+.logo {
+    color: #333;
+    z-index: 1;
+    cursor: pointer; /* Indicate it's clickable */
+    transition: transform 0.1s ease-out, filter 0.3s ease-in-out; /* Add filter transition */
+    position: relative;
+    overflow: visible;
+}
+
+.logo {
+    position: relative;
+}
+
+.logo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    border-radius: 0;
+    z-index: 2;
+    transition: opacity 0.3s;
+    background: conic-gradient(
+        #ffdd00 0deg 120deg, /* Yellow */
+        #ff00de 120deg 240deg, /* Magenta */
+        #00ffea 240deg 360deg /* Cyan */
+    );
+    background-size: 200% 200%; /* Make the gradient larger */
+    background-position: center;
+    filter: blur(18px); /* Increase blur for a bigger glow */
+    /* Use the logo image as a mask */
+    -webkit-mask-image: url('logo_gradiente.png');
+    -webkit-mask-size: 101% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url('logo_gradiente.png');
+    mask-size: 100.21% 100%;
+    mask-repeat: no-repeat;
+}
+/* Ensure logo image is above the glow */
+.logo img {
+    position: relative;
+    z-index: 3;
+}
+
+.logo:hover::before {
+    opacity: 0.85;
+}
+
+.logo.clicked {
+    animation: fade-out 0.47s ease-out forwards; /* Keep fade-out animation */
+    z-index: 100; /* Ensure it's above everything */
+    filter: none; /* Remove hover glow during animation */
+}
+
+.logo-shadow {
+    color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    pointer-events: none; /* Allow clicks to pass through shadows */
+    /* Initial shadow offset */
+    transform: translate(5px, 5px) skew(10deg, 5deg);
+    filter: blur(11px); /* Add blur for diffusion */
+    mix-blend-mode: multiply; /* Add blend mode */
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), filter 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.5s ease-out; /* Slower, smoother transitions */
+}
+
+.logo-shadow img {
+    opacity: 0.7; /* Example: make shadow image slightly transparent */
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
