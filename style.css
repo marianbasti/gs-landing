@@ -125,15 +125,19 @@ body {
 @keyframes logo-pulse {
     0% {
         transform: scale(1);
+        opacity: 1;
     }
     40% {
         transform: scale(0.95);
+        opacity: 1; /* Logo remains fully visible during the initial part of the pulse */
     }
     60% {
         transform: scale(1.05);
+        opacity: 0.5; /* Start fading out as it expands */
     }
     100% {
         transform: scale(1);
+        opacity: 0; /* Fully faded out at the end of the pulse */
     }
 }
 

@@ -293,8 +293,13 @@ logo.addEventListener('mouseleave', () => {
 });
 
 logo.addEventListener('animationend', () => {
+    // Ensure the logo remains invisible and non-interactive after the animation.
+    logo.style.opacity = '0';
+    logo.style.transform = 'scale(1)'; // Match the animation's end state for transform.
+    logo.style.pointerEvents = 'none'; // Make the logo non-interactive.
+
+    // Remove the class that triggered the animation.
     logo.classList.remove('clicked');
-    logo.style.transform = '';
 });
 
 window.addEventListener('DOMContentLoaded', () => {
