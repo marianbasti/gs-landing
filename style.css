@@ -4,7 +4,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(23, 30, 31);
+    background-color: rgb(13, 18, 19);
     overflow: hidden; /* Prevent scrollbars */
 }
 
@@ -95,9 +95,16 @@ body {
 }
 
 .logo.clicked {
-    animation: fade-out 0.47s ease-out forwards; /* Keep fade-out animation */
-    z-index: 100; /* Ensure it's above everything */
-    filter: none; /* Remove hover glow during animation */
+    animation: logo-pulse 0.38s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 100;
+    filter: none;
+}
+
+/* Animate the colored glow when logo is clicked */
+.logo.clicked::before {
+    animation: logo-glow-pulse 0.38s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    /* Ensure the glow is visible during the pulse */
+    opacity: 0.85;
 }
 
 .logo-shadow {
@@ -115,11 +122,36 @@ body {
     opacity: 0.7; /* Example: make shadow image slightly transparent */
 }
 
-@keyframes fade-out {
-    from {
-        opacity: 1;
+@keyframes logo-pulse {
+    0% {
+        transform: scale(1);
     }
-    to {
-        opacity: 0;
+    40% {
+        transform: scale(0.95);
+    }
+    60% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes logo-glow-pulse {
+    0% {
+        -webkit-mask-size: 101% 100%;
+        mask-size: 100.21% 100%;
+    }
+    40% {
+        -webkit-mask-size: 101% 100%;
+        mask-size: 100.21% 100%;
+    }
+    60% {
+        -webkit-mask-size: 105% 104%;
+        mask-size: 101.21% 101%;
+    }
+    100% {
+        -webkit-mask-size: 101% 100%;
+        mask-size: 100.21% 100%;
     }
 }

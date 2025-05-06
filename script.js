@@ -259,20 +259,42 @@ function onMouseMove(e) {
 
 container.addEventListener('mousemove', onMouseMove);
 // --- Logo Click Animation ---
-logo.addEventListener('click', () => {
-    // Prevent multiple clicks
+let logoPressed = false; // Tracks if mouse is currently pressed down on the logo
+
+logo.addEventListener('mousedown', (e) => {
+    // Prevent starting a new animation or default browser actions if one is already in progress
+    if (logo.classList.contains('clicked')) {
+        e.preventDefault(); 
+        return;
+    }
+    logoPressed = true;
+});
+
+logo.addEventListener('mouseup', (e) => {
+    if (!logoPressed) { // Ensure mousedown happened on the logo
+        return;
+    }
+    logoPressed = false; // Reset pressed state
+
+    // If already animating (e.g., from a rapid re-click attempt), do nothing
     if (logo.classList.contains('clicked')) {
         return;
     }
-
-    // Add class to trigger animation and hide shadows via CSS
+    // Add .clicked class to trigger the pulse animation
     logo.classList.add('clicked');
+});
 
-    // Remove the logo element after the animation completes
-    logo.addEventListener('animationend', () => {
-        logo.remove();
-        onMouseMove;
-    }, { once: true }); // Ensure the listener runs only once
+logo.addEventListener('mouseleave', () => {
+    // If mouse leaves while pressed, reset the pressed state
+    // This prevents mouseup outside the logo from triggering the animation
+    if (logoPressed) {
+        logoPressed = false;
+    }
+});
+
+logo.addEventListener('animationend', () => {
+    logo.classList.remove('clicked');
+    logo.style.transform = '';
 });
 
 window.addEventListener('DOMContentLoaded', () => {
